@@ -1,6 +1,6 @@
 {
   "name": "neda-app",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "A learning companion app for coders",
   "scripts": {
     "test": "cross-env NODE_ENV=test PORT=8080 MONGO_URL=mongodb://localhost:27017/neda-test node_modules/.bin/nyc node --harmony-proxies node_modules/.bin/ava",
