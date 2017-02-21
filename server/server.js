@@ -44,11 +44,29 @@ mongoose.connect(serverConfig.mongoURL, (error) => {
   }
 });
 
+const serverRoutes = require('./routes/routes');
+const account = require('./models/account');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
 // Apply body Parser and server public assets and routes
 app.use(compression());
 app.use(bodyParser.json({ limit: '20mb' }));
-app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
+app.use(bodyParser.urlencoded({ limit: '20mb', extended: true }));
 app.use(Express.static(path.resolve(__dirname, '../dist')));
+
+// Save user session between pages
+app.use(require('morgan')('combined'));
+app.use(require('cookie-parser')());
+app.use(require('express-session')({ secret: 'blabla', resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Link server routes
+passport.use(new LocalStrategy(account.authenticate()));
+passport.serializeUser(account.serializeUser());
+passport.deserializeUser(account.deserializeUser());
+serverRoutes(app);
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
