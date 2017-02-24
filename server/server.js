@@ -55,17 +55,9 @@ app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: true }));
 app.use(Express.static(path.resolve(__dirname, '../dist')));
 
-// Save user session between pages
-app.use(require('morgan')('combined'));
-app.use(require('cookie-parser')());
-app.use(require('express-session')({ secret: 'blabla', resave: true, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Link server routes
 passport.use(new LocalStrategy(account.authenticate()));
-passport.serializeUser(account.serializeUser());
-passport.deserializeUser(account.deserializeUser());
 serverRoutes(app);
 
 // Render Initial HTML
