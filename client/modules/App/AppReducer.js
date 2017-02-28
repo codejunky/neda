@@ -1,27 +1,20 @@
 // Import Actions
-import { TOGGLE_ADD_POST } from './AppActions';
+import { LOGIN_USER_SUCCESS } from './AppActions';
 
 // Initial State
 const initialState = {
-  showAddPost: false,
+  authenticated: false,
 };
+
 
 const AppReducer = (state = initialState, action) => {
   switch (action.type) {
-    case TOGGLE_ADD_POST:
-      return {
-        showAddPost: !state.showAddPost,
-      };
-
+    case LOGIN_USER_SUCCESS:
+      return Object.assign({}, state, { authenticated: true });
     default:
       return state;
   }
 };
-
-/* Selectors */
-
-// Get showAddPost
-export const getShowAddPost = state => state.app.showAddPost;
 
 // Export Reducer
 export default AppReducer;

@@ -3,10 +3,13 @@ import { connect } from 'react-redux';
 
 // Import Style
 import styles from './App.css';
+// import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 // Import Components
 import Helmet from 'react-helmet';
 import DevTools from './components/DevTools';
+
+import Header from './components/Header/Header';
 
 export class App extends Component {
   constructor(props) {
@@ -38,7 +41,8 @@ export class App extends Component {
               },
             ]}
           />
-          <div className={styles.container}>
+          <div className="container-fluid">
+            <Header />
             {this.props.children}
           </div>
         </div>

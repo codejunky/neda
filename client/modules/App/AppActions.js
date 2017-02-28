@@ -1,9 +1,18 @@
+import 'isomorphic-fetch';
+
 // Export Constants
-export const TOGGLE_ADD_POST = 'TOGGLE_ADD_POST';
+export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 
 // Export Actions
-export function toggleAddPost() {
-  return {
-    type: TOGGLE_ADD_POST,
+export function loginUser({ email, password }) {
+  return dispatch => {
+    fetch('/login', { email, password })
+      .then((response) => {
+        if (response.status === 200) {
+          dispatch({
+            type: LOGIN_USER_SUCCESS
+          });
+        }
+      });
   };
 }

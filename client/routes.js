@@ -1,7 +1,10 @@
 /* eslint-disable global-require */
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
+
 import App from './modules/App/App';
+import Login from './modules/App/components/Login/Login';
+
 import Home from './components/Home';
 
 // require.ensure polyfill for node
@@ -26,5 +29,6 @@ if (typeof require.ensure !== 'function') {
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={Home} />
+    <Route path="/login" component={Login} />
   </Route>
 );
