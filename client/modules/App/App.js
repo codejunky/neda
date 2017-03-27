@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import cookie from 'react-cookie';
 
 // Import Style
 import styles from './App.css';
@@ -8,10 +9,16 @@ import styles from './App.css';
 import Helmet from 'react-helmet';
 import DevTools from './components/DevTools';
 
+import Nav from '../../components/Nav';
+
+import { logout } from './AppActions';
+
 export class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { isMounted: false };
+    this.state = {
+      isMounted: false,
+    };
   }
 
   componentDidMount() {
@@ -19,6 +26,8 @@ export class App extends Component {
   }
 
   render() {
+    const { authenticated, logout } = this.props;
+    const user = cookie.load('user');
     return (
       <div>
         {this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && <DevTools />}
@@ -38,6 +47,7 @@ export class App extends Component {
               },
             ]}
           />
+          <Nav isAuthenticated={authenticated} user={user} logout={logout} />
           <div className={styles.container}>
             {this.props.children}
           </div>
@@ -49,13 +59,14 @@ export class App extends Component {
 
 App.propTypes = {
   children: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
+  authenticated: PropTypes.bool.isRequired,
 };
 
 // Retrieve data from store as props
-function mapStateToProps(store) {
+function mapStateToProps(state) {
   return {
+    authenticated: state.app.authenticated,
   };
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { logout })(App);

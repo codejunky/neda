@@ -45,7 +45,7 @@ mongoose.connect(serverConfig.mongoURL, (error) => {
 });
 
 const serverRoutes = require('./routes/routes');
-const Account = require('./models/Account');
+const User = require('./models/User');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
@@ -57,7 +57,7 @@ app.use(Express.static(path.resolve(__dirname, '../dist')));
 
 
 // Link server routes
-passport.use(new LocalStrategy(Account.authenticate()));
+passport.use(new LocalStrategy({ usernameField: 'email' }, User.authenticate()));
 serverRoutes(app);
 
 // Render Initial HTML

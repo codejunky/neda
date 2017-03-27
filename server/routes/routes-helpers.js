@@ -1,5 +1,5 @@
 import jwt from 'jwt-simple';
-import Account from '../models/Account';
+import User from '../models/User';
 
 function tokenForUserAccount(request) {
   const timestamp = new Date().getTime();
@@ -18,13 +18,12 @@ function setUserAccountInfo(request) {
   return getUserInfo;
 }
 
-function getRegister(req, res) { res.send('Register page'); }
-
-function getLogin(req, res) { res.send('Login page ' + req.user); }
-
-function getProfile(req, res) { res.send('Successful login. This is your profile ' + JSON.stringify(req.body)); }
-
-function getLogout(req, res) { req.logout(); res.send('Successful logout'); }
+function logout(req, res) {
+  req.logout();
+  return res.json({
+    message: 'Logout successful',
+  });
+}
 
 function postLogin(req, res) {
   res.send({
@@ -33,13 +32,14 @@ function postLogin(req, res) {
 }
 
 function postRegister(req, res) {
-  const userAccount = new Account({ username: req.body.username });
-  Account.register(userAccount, req.body.password, (err) => {
+  const userAccount = new User({ email: req.body.email, username: req.body.username });
+  User.register(userAccount, req.body.password, (err) => {
     let response = {};
-    if (err) { response = res.send(err);
+    if (err) {
+      response = res.send(err);
     } else { response = res.json({ token: tokenForUserAccount(userAccount), user: setUserAccountInfo(userAccount) }); }
     return response;
   });
 }
 
-export { getRegister, getLogin, getProfile, getLogout, postLogin, postRegister };
+export { logout, postLogin, postRegister };
