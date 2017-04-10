@@ -4,16 +4,16 @@
   "description": "A learning companion app for coders",
   "scripts": {
     "test": "cross-env NODE_ENV=test PORT=8080 MONGO_URL=mongodb://localhost:27017/neda-test node_modules/.bin/nyc node --harmony-proxies node_modules/.bin/ava",
-    "watch:test": "npm run test -- --watch",
-    "cover": "nyc npm run test",
+    "watch:test": "yarn run test -- --watch",
+    "cover": "nyc yarn run test",
     "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "start": "cross-env BABEL_DISABLE_CACHE=1 NODE_ENV=development nodemon index.js",
     "start:prod": "cross-env NODE_ENV=production node index.js",
-    "bs": "npm run clean && npm run build && npm run build:server && npm run start:prod",
+    "bs": "yarn run clean && yarn run build && yarn run build:server && yarn run start:prod",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
     "build:server": "cross-env NODE_ENV=production webpack --config webpack.config.server.js",
     "clean": "rimraf dist",
-    "slate": "rimraf node_modules && npm install",
+    "slate": "rimraf node_modules && yarn",
     "lint": "eslint client server"
   },
   "pre-commit": [
