@@ -5,7 +5,7 @@ export function validateLogin(data) {
 
   if (!data.email) {
     errors.email = 'Email is required';
-  } else if (!validator.isEmail(data.email)) {
+  } else if (!validator.isEmail(data.email, { require_tld: true })) {
     errors.email = 'Email is not valid';
   }
 
@@ -14,7 +14,6 @@ export function validateLogin(data) {
   } else if (data.password.length < 6) {
     errors.password = 'The password need to be at least 6 characters long';
   }
-
   return errors;
 }
 
