@@ -1,5 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import isEmpty from 'lodash.isempty';
+
+import { validateRegister } from '../../../../util/validator';
 
 import { registerUser } from '../../AppActions';
 
@@ -15,6 +18,7 @@ class Register extends Component {
       username: '',
       password: '',
       password_confirmation: '',
+      errors: {},
     };
   }
 
@@ -22,6 +26,14 @@ class Register extends Component {
   onSubmit(event) {
     event.preventDefault();
     const { username, email, password, password_confirmation } = this.state;
+
+    const errors = validateRegister({ username, email, password, password_confirmation });
+
+    if (!isEmpty(errors)) {
+      this.setState({ errors });
+      return;
+    }
+
     this.props.registerUser({ username, email, password, password_confirmation });
   }
 
