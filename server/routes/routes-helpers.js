@@ -32,12 +32,35 @@ function postLogin(req, res) {
 }
 
 function postRegister(req, res) {
-  const userAccount = new User({ email: req.body.email, username: req.body.username });
-  User.register(userAccount, req.body.password, (err) => {
-    let response = {};
-    if (err) {
-      response = res.send(err);
-    } else { response = res.json({ token: tokenForUserAccount(userAccount), user: setUserAccountInfo(userAccount) }); }
+  let response = {};
+
+  User.find({ $or: [{ email: req.body.email }, { username: req.body.username }] }, (findErr, alreadyRegisteredUsers) => {
+    if (findErr) {
+      response = res.json({ errors: { dberror: findErr } });
+      return response;
+    } else if (alreadyRegisteredUsers.length > 0) {
+      const errors = {};
+      alreadyRegisteredUsers.forEach((arU) => {
+        if (arU.email === req.body.email) {
+          errors.email = 'This email address is already in use.';
+        }
+        if (arU.username === req.body.username) {
+          errors.username = 'This username is already in use.';
+        }
+      });
+      response = res.json({ errors });
+      return response;
+    }
+
+    const userAccount = new User({ email: req.body.email, username: req.body.username });
+    User.register(userAccount, req.body.password, (registerErr) => {
+      if (registerErr) {
+        response = res.json({ errors: { dberror: registerErr } });
+      } else {
+        response = res.json({ token: tokenForUserAccount(userAccount), user: setUserAccountInfo(userAccount) });
+      }
+      return response;
+    });
     return response;
   });
 }
