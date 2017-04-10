@@ -49,7 +49,7 @@ test('calls componentDidMount', t => {
         intl,
       },
       childContextTypes: {
-        router: React.PropTypes.object,
+        router: PropTypes.object,
         intl: intlShape,
       },
     },

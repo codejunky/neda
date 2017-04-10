@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import cookie from 'react-cookie';
+import PropTypes from 'prop-types';
 
 // Import Routes
 import routes from './routes';
@@ -34,5 +35,5 @@ export default class App extends Component {
 }
 
 App.propTypes = {
-  store: React.PropTypes.object.isRequired,
+  store: PropTypes.object.isRequired,
 };
