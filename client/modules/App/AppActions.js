@@ -29,11 +29,15 @@ export function loginUser({ email, password }) {
   };
 }
 
-export function registerUser({ username, email, password, password_confirmation }) {
+export function registerUser({ username, email, password, password_confirmation }, errorCallback) {
   return dispatch => {
     axios.post('/register', { username, email, password, password_confirmation })
       .then((res) => {
-        setUserAndRedirect(dispatch, res.data.token, res.data.user);
+        if (res.data.errors) {
+          errorCallback(res.data.errors);
+        } else {
+          setUserAndRedirect(dispatch, res.data.token, res.data.user);
+        }
       });
   };
 }

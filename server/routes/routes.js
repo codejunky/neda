@@ -21,7 +21,7 @@ const jwtLogin = new Strategy(opts, (payload, done) => {
 passport.use(jwtLogin);
 
 module.exports = function application(app) {
-  app.use(require('body-parser').urlencoded({ extended: true }));
+  // app.use(require('body-parser').urlencoded({ extended: true }));
 
   // app.get('/register', getRegister);
   // app.get('/login', getLogin);
