@@ -15,6 +15,7 @@ class Nav extends Component {
     } else {
       const welcomeString = `Welcome ${user.username} `;
       links.push(<div>{welcomeString}<a onClick={logout} href="">Logout</a></div>);
+      links.push(<Link to="/profile">Profile</Link>);
     }
 
     return links.map((link, index) => <li key={index}>{link}</li>);
