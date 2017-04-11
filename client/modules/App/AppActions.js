@@ -15,8 +15,8 @@ export function loginUserSuccess() {
 function setUserAndRedirect(dispatch, token, user) {
   cookie.save('token', token, { path: '/', maxAge: Date.now() + (7 * 24 * 60 * 60) });
   cookie.save('user', user, { path: '/', maxAge: Date.now() + (7 * 24 * 60 * 60) });
-  dispatch(loginUserSuccess());
   browserHistory.push('/');
+  dispatch(loginUserSuccess());
 }
 
 // Export Actions
