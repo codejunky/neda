@@ -7,6 +7,7 @@ import Home from './components/Home';
 import Login from './modules/App/components/Login/Login';
 import Register from './modules/App/components/Register/Register';
 import RequireGuest from './util/components/RequireGuest';
+import Profile from './components/Profile';
 
 // require.ensure polyfill for node
 if (typeof require.ensure !== 'function') {
@@ -20,5 +21,6 @@ export default (
     <IndexRoute component={Home} />
     <Route path="login" component={RequireGuest(Login)} />
     <Route path="register" component={RequireGuest(Register)} />
+    <Route path="profile" component={Profile} />
   </Route>
 );
