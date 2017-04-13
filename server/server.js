@@ -140,6 +140,12 @@ app.use((req, res, next) => {
   });
 });
 
+app.put('/profiles/:user_slug', (req, res) => {
+  // NOW DO STUFF WITH IT
+  console.log(req.body);
+  res.json({ test: 'hello there', body: req.body });
+});
+
 // start app
 app.listen(serverConfig.port, (error) => {
   if (!error) {

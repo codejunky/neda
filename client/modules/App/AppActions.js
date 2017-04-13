@@ -6,9 +6,10 @@ import { browserHistory } from 'react-router';
 export const LOGIN_USER_SUCCESS = 'login_user_success';
 export const LOGOUT_USER_SUCCESS = 'logout_user_succes';
 
-export function loginUserSuccess() {
+export function loginUserSuccess(user) {
   return {
     type: LOGIN_USER_SUCCESS,
+    user,
   };
 }
 
@@ -16,7 +17,7 @@ function setUserAndRedirect(dispatch, token, user) {
   cookie.save('token', token, { path: '/', maxAge: Date.now() + (7 * 24 * 60 * 60) });
   cookie.save('user', user, { path: '/', maxAge: Date.now() + (7 * 24 * 60 * 60) });
   browserHistory.push('/');
-  dispatch(loginUserSuccess());
+  dispatch(loginUserSuccess(user));
 }
 
 // Export Actions

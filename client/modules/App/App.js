@@ -29,6 +29,15 @@ export class App extends Component {
   render() {
     const { authenticated, logout } = this.props;
     const user = cookie.load('user');
+    
+    // TODO: Think of a way to only pass down data to children that need the data
+    const childrenWithProps = React.Children.map(this.props.children,
+     (child) => React.cloneElement(child, {
+       isAuthenticated: authenticated,
+       user,
+     })
+    );
+
     return (
       <div>
         {this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && <DevTools />}
@@ -50,7 +59,7 @@ export class App extends Component {
           />
           <Nav isAuthenticated={authenticated} user={user} logout={logout} />
           <div className={styles.container}>
-            {this.props.children}
+            {childrenWithProps}
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { LOGIN_USER_SUCCESS } from './AppActions';
 // Initial State
 const initialState = {
   authenticated: false,
+  user: { },
 };
 
 
@@ -13,6 +14,7 @@ const AppReducer = (state = initialState, action) => {
       return {
         ...state,
         authenticated: true,
+        user: action.user,
       };
     default:
       return state;

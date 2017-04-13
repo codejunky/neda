@@ -13,8 +13,14 @@ function setUserAccountInfo(request) {
     _id: request._id,
     username: request.username,
     email: request.email,
+    cityOfResidence: request.cityOfResidence,
+    countryOfResidence: request.countryOfResidence,
+    availability: request.availability,
+    dateAdded: request.dateAdded,
+    dateModified: request.dateModified,
+    // TODO: Change the to something else maybe?
+    slug: request.username,
   };
-
   return getUserInfo;
 }
 
